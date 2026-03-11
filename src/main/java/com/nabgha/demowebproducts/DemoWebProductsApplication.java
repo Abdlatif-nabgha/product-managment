@@ -8,7 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class DemoWebProductsApplication {
 
     public static void main(String[] args) {
@@ -32,6 +33,11 @@ public class DemoWebProductsApplication {
                     .name("Smartphone")
                     .price(20000.00)
                     .quantity(2)
+                    .build());
+            productRepository.save(Product.builder()
+                    .name("MacBook Pro 2026")
+                    .price(30000.00)
+                    .quantity(1)
                     .build());
             productRepository.findAll()
                     .forEach(System.out::println);
