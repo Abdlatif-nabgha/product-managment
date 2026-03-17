@@ -8,12 +8,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <style>
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .edit-btn {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .edit-btn:hover {
+            background: #2e7d32;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .delete-btn:hover {
+            background: #c62828;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .action-btn i {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
   <div class="p-3" layout:fragment="content1">
-    <div class="p-3" sec:authorize="hasRole('ADMIN')">
-      <a class="btn btn-primary" th:href="@{/admin/newProduct}">New Product</a>
+    <div class="p-3 d-flex justify-content-between align-items-center">
+      <div sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary" th:href="@{/admin/newProduct}">New Product</a>
+      </div>
+      
+      <!-- Search Form -->
+      <form method="get" th:action="@{/user/index}" class="d-flex gap-2">
+        <input type="text" name="keyword" class="form-control" placeholder="Search by name..." th:value="${keyword}">
+        <button type="submit" class="btn btn-outline-primary">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </form>
     </div>
+<!--    add search functionality here -->
     <table class="table table-hover">
       <thead>
       <th>ID</th>
@@ -28,11 +78,26 @@
         <td th:text="${p.name}"></td>
         <td th:text="${p.price}"></td>
         <td th:text="${p.quantity}"></td>
-        <td sec:authorize="hasRole('ADMIN')">
-          <form method="post" th:action="@{/admin/delete(id=${p.id})}">
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-        </td>
+          <td sec:authorize="hasRole('ADMIN')">
+              <div class="d-flex gap-2">
+
+                  <!-- Edit -->
+                  <a th:href="@{/admin/edit(id=${p.id})}"
+                     class="btn btn-sm action-btn edit-btn">
+                      <i class="bi bi-pencil-square"></i>
+                  </a>
+
+                  <!-- Delete -->
+                  <form method="post"
+                        th:action="@{/admin/delete(id=${p.id})}"
+                        onsubmit="return confirm('Are you sure?')">
+                      <button type="submit" class="btn btn-sm action-btn delete-btn">
+                          <i class="bi bi-trash3"></i>
+                      </button>
+                  </form>
+
+              </div>
+          </td>
       </tr>
       </tbody>
     </table>
