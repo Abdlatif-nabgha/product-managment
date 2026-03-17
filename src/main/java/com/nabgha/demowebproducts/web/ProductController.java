@@ -2,6 +2,7 @@ package com.nabgha.demowebproducts.web;
 
 import com.nabgha.demowebproducts.entities.Product;
 import com.nabgha.demowebproducts.repository.ProductRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,16 @@ public class ProductController {
     @GetMapping("/notAuthorized")
     public String notAuthorized() {
         return "notAuthorized";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "login";
     }
 }
