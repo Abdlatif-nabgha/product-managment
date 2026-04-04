@@ -21,4 +21,5 @@ public class Product {
     private double price;
     @Min(1)
     private int quantity;
+    private boolean selected;
 }

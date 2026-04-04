@@ -20,7 +20,11 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping("/user/index")
-    public String index(Model model, @RequestParam(name = "keyword", defaultValue = "") String keyword) {
+    public String index(
+        Model model,
+        @RequestParam(name = "keyword", defaultValue = "") String keyword
+    ) 
+    {
         List<Product> products = productRepository.findByNameContainsIgnoreCase(keyword);
         model.addAttribute("productList", products);
         model.addAttribute("keyword", keyword);
